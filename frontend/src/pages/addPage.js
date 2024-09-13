@@ -12,14 +12,14 @@ export const addPage = () => {
     const form = document.createElement("form");
 
     form.classList.add(
-        "flex",
-        "flex-col",
-        "w-1/6",
-        "gap-4",
-        "bg-white",
-        "p-8",
-        "rounded",
-        "shadow-md"
+        "w-full",
+    "max-w-md", 
+    "bg-white",
+    "p-6",
+    "rounded",
+    "shadow-md",
+    "space-y-4",
+    "md:w-1/3"
     );
 
     const title = document.createElement("h2");
