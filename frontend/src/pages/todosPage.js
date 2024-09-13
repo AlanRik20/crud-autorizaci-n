@@ -27,6 +27,15 @@ export const todosPage = () => {
     window.location.pathname = "/home";
   });
 
+  const btnAaddTask = document.createElement("button");
+  btnAaddTask.classList.add("bg-blue-500",
+    "text-white",
+    "p-2",
+    "rounded",
+    "hover:bg-red-600",
+    "mb-4")
+  btnAaddTask.textContent="añadir"
+  
   const title = document.createElement("h1");
 
   title.classList.add("text-3xl", "font-bold", "mb-4");
@@ -74,12 +83,14 @@ export const todosPage = () => {
   table.appendChild(tbody);
 
   container.appendChild(btnHome);
-  fetch("http://localhost:4000/todos",{
-    credentials:'include'
+  container.appendChild(btnAaddTask);
+  
+  fetch("http://localhost:4000/todos", {
+    credentials: 'include'
   })
-    .then((response) => response.json())
-    .then((data) => {
-      data.todos.forEach((todo) => {
+    .then(response => response.json())
+    .then(data => {
+      data.todos.forEach(todo => {
         if (todo.id === 0) return;
 
         const tr = document.createElement("tr");
@@ -101,17 +112,17 @@ export const todosPage = () => {
         td4.textContent = todo.owner;
 
         const td5 = document.createElement("td");
-        td5.classList.add("border","px-4","py-2");
+        td5.classList.add("border", "px-4", "py-2");
 
-        const btnDelete = document.createElement("button")
-        const btnModify = document.createElement("button")
+        const btnDelete = document.createElement("button");
+        const btnModify = document.createElement("button");
 
         btnDelete.classList.add(
-          "bg-blue-500",
+          "bg-red-500",
           "text-white",
           "p-2",
           "rounded",
-          "hover:bg-blue-600",
+          "hover:bg-red-600",
           "mb-4"
         );
 
@@ -120,21 +131,78 @@ export const todosPage = () => {
           "text-white",
           "p-2",
           "rounded",
-          "hover:bg-blue-600",
+          "hover:bg-green-600",
           "mb-4"
         );
 
-        btnDelete.textContent="eliminar"
-        btnModify.textContent="Modificar"
+        btnDelete.textContent = "Eliminar";
+        btnModify.textContent = "Modificar";
 
         btnDelete.addEventListener("click", () => {
-          window.location.pathname = "/home";
+          fetch(`http://localhost:4000/todos/${todo.id}`, {
+            method: 'DELETE',
+            credentials: 'include'
+          }).then(() => {
+            tr.remove();
+          });
         });
 
         btnModify.addEventListener("click", () => {
-          window.location.pathname = "/home";
+          const newTitle = prompt("Ingrese el nuevo título:", todo.title);
+          const newCompleted = confirm("¿Está completada la tarea?");
+
+          if (newTitle !== null) {
+            fetch(`http://localhost:4000/todos/${todo.id}`, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                title: newTitle,
+                completed: newCompleted
+              }),
+              credentials: 'include'
+            }).then(response => response.json())
+              .then(updatedTodo => {
+                td2.textContent = updatedTodo.todo.title;
+                td3.textContent = updatedTodo.todo.completed ? "Sí" : "No";
+              });
+          }
+        });
+
+        btnAaddTask.addEventListener("click", () => {
+          const newTitle = prompt("Ingrese el nuevo título:");
+          const newCompleted = confirm("¿Está completada la tarea?");
+        
+          if (newTitle !== null) {
+            fetch(`http://localhost:4000/todos/agregar`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                title: newTitle,
+                completed: newCompleted
+              }),
+              credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(result => {
+              if (result.message === "Tarea agregada correctamente") {
+                // Aquí puedes manejar la visualización de la nueva tarea en la interfaz
+                console.log("Nueva tarea agregada:", result.todo);
+                // Actualizar la UI o hacer alguna acción después de agregar la tarea
+              } else {
+                console.error("Error al agregar tarea:", result.message);
+              }
+            })
+            .catch(error => {
+              console.error("Error en la solicitud:", error);
+            });
+          }
         });
         
+
         td5.appendChild(btnDelete);
         td5.appendChild(btnModify);
         tr.appendChild(td1);
