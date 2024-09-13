@@ -74,11 +74,13 @@ export const todosPage = () => {
   table.appendChild(tbody);
 
   container.appendChild(btnHome);
-  fetch("http://localhost:4000/todos")
+  fetch("http://localhost:4000/todos",{
+    credentials:'include'
+  })
     .then((response) => response.json())
     .then((data) => {
       data.todos.forEach((todo) => {
-        if (todo.id > 10) return;
+        if (todo.id === 0) return;
 
         const tr = document.createElement("tr");
 
@@ -98,10 +100,48 @@ export const todosPage = () => {
         td4.classList.add("border", "px-4", "py-2");
         td4.textContent = todo.owner;
 
+        const td5 = document.createElement("td");
+        td5.classList.add("border","px-4","py-2");
+
+        const btnDelete = document.createElement("button")
+        const btnModify = document.createElement("button")
+
+        btnDelete.classList.add(
+          "bg-blue-500",
+          "text-white",
+          "p-2",
+          "rounded",
+          "hover:bg-blue-600",
+          "mb-4"
+        );
+
+        btnModify.classList.add(
+          "bg-green-500",
+          "text-white",
+          "p-2",
+          "rounded",
+          "hover:bg-blue-600",
+          "mb-4"
+        );
+
+        btnDelete.textContent="eliminar"
+        btnModify.textContent="Modificar"
+
+        btnDelete.addEventListener("click", () => {
+          window.location.pathname = "/home";
+        });
+
+        btnModify.addEventListener("click", () => {
+          window.location.pathname = "/home";
+        });
+        
+        td5.appendChild(btnDelete);
+        td5.appendChild(btnModify);
         tr.appendChild(td1);
         tr.appendChild(td2);
         tr.appendChild(td3);
         tr.appendChild(td4);
+        tr.appendChild(td5);
         tbody.appendChild(tr);
       });
     });
