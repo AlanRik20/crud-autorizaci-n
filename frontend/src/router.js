@@ -1,6 +1,7 @@
 import { loginPage } from "./pages/loginPage";
 import { homePage } from "./pages/homePage";
 import { todosPage } from "./pages/todosPage";
+import { addPage } from "./pages/addPage";
 
 import { validateSession } from "./helpers/validateSession";
 
@@ -25,6 +26,10 @@ export async function router(path, app) {
 
   if (path === "/todos") {
     app.appendChild(todosPage());
+    return;
+  }
+  if (path === "/agregar") {
+    app.appendChild(addPage());
     return;
   }
 }

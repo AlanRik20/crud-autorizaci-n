@@ -171,36 +171,9 @@ export const todosPage = () => {
         });
 
         btnAaddTask.addEventListener("click", () => {
-          const newTitle = prompt("Ingrese el nuevo título:");
-          const newCompleted = confirm("¿Está completada la tarea?");
-        
-          if (newTitle !== null) {
-            fetch(`http://localhost:4000/todos/agregar`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                title: newTitle,
-                completed: newCompleted
-              }),
-              credentials: 'include'
-            })
-            .then(response => response.json())
-            .then(result => {
-              if (result.message === "Tarea agregada correctamente") {
-                // Aquí puedes manejar la visualización de la nueva tarea en la interfaz
-                console.log("Nueva tarea agregada:", result.todo);
-                // Actualizar la UI o hacer alguna acción después de agregar la tarea
-              } else {
-                console.error("Error al agregar tarea:", result.message);
-              }
-            })
-            .catch(error => {
-              console.error("Error en la solicitud:", error);
-            });
-          }
+          window.location.pathname = "/agregar";
         });
+        
         
 
         td5.appendChild(btnDelete);
