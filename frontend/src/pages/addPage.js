@@ -119,7 +119,7 @@ export const addPage = () => {
 
             const data = await response.json();
             console.log("Nueva tarea agregada:", data.todo);
-            window.location.pathname = "/home";
+            window.location.pathname = "/todos";
         } catch (error) {
             console.error("Error en la solicitud:", error);
         }

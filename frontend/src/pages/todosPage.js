@@ -123,7 +123,8 @@ export const todosPage = () => {
           "p-2",
           "rounded",
           "hover:bg-red-600",
-          "mb-4"
+          "mb-4",
+          "m-3"
         );
 
         btnModify.classList.add(
