@@ -13,7 +13,7 @@ export const deleteTodoCtrl = (req, res) => {
   const userId = req.user.id; // Usuario autenticado
   const { id } = req.params; // ID de la tarea que se va a eliminar
 
-  // Buscar la tarea en el array
+  // Buscar la tarea 
   const todoIndex = database.todos.findIndex((todo) => todo.id === parseInt(id) && todo.owner === userId);
 
   // Verificar si la tarea existe y pertenece al usuario
@@ -32,7 +32,7 @@ export const updateTodoCtrl = (req, res) => {
   const { id } = req.params; // ID de la tarea que se va a modificar
   const { title, completed } = req.body; // Nuevos datos para la tarea
 
-  // Buscar la tarea en el array
+  // Buscar la tarea
   const todoIndex = database.todos.findIndex((todo) => todo.id === parseInt(id) && todo.owner === userId);
 
   // Verificar si la tarea existe y pertenece al usuario
@@ -42,7 +42,7 @@ export const updateTodoCtrl = (req, res) => {
 
   // Actualizar los datos de la tarea
   database.todos[todoIndex] = {
-    ...database.todos[todoIndex],
+    ...database.todos[todoIndex], //se utiliza spread operator para mantener los datos del array
     title: title || database.todos[todoIndex].title, // Si no se proporciona un nuevo título, mantener el existente
     completed: completed !== undefined ? completed : database.todos[todoIndex].completed, // Mantener el estado anterior si no se proporciona
   };
@@ -59,7 +59,7 @@ export const addTodoCtrl = (req, res) => {
     return res.status(400).json({ message: "El título de la tarea es requerido." });
   }
 
-  // Crear un nuevo ID único (este ejemplo usa un contador simple; en producción, usar una mejor solución como UUID)
+  // Crear un nuevo ID único (sumando )
   const newId = database.todos.length > 0 ? Math.max(...database.todos.map(todo => todo.id)) + 1 : 1;
 
   // Crear la nueva tarea
