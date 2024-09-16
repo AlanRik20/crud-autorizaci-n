@@ -6,7 +6,7 @@ export const addPage = () => {
         "items-center",
         "justify-center",
         "h-screen",
-        "bg-gray-200"
+        "bg-gray-600"
     );
 
     const form = document.createElement("form");
@@ -58,13 +58,15 @@ export const addPage = () => {
     submitButton.type = "submit";
     submitButton.classList.add(
         "w-full",
-        "bg-blue-500",
-        "hover:bg-blue-700",
-        "text-white",
-        "font-bold",
-        "py-2",
-        "px-4",
-        "rounded"
+    "bg-gray-400",
+    "hover:bg-slate-600",
+    "text-black",
+    "font-bold",
+    "py-2",
+    "px-4",
+    "rounded",
+    "text-black",
+    "hover:text-white"
     );
     submitButton.textContent = "Agregar Tarea";
 

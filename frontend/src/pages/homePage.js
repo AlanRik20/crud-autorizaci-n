@@ -6,14 +6,14 @@ export const homePage = () => {
     "items-center",
     "justify-center",
     "h-screen",
-    "bg-gray-200",
+    "bg-gray-600",
     "flex-col",
     "gap-4"
   );
 
   const title = document.createElement("h1");
 
-  title.classList.add("text-2xl", "font-bold", "mb-4");
+  title.classList.add("text-2xl", "font-bold", "mb-4", "text-white");
   title.textContent = "Home Page";
 
   const btnLogout = document.createElement("button");

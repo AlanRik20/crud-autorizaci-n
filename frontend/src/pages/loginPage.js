@@ -6,7 +6,7 @@ export const loginPage = () => {
     "items-center",
     "justify-center",
     "h-screen",
-    "bg-gray-200"
+    "bg-gray-600"
   );
 
   const form = document.createElement("form");
@@ -62,14 +62,15 @@ export const loginPage = () => {
   submitButton.type = "submit";
   submitButton.classList.add(
     "w-full",
-    "bg-blue-500",
-    "hover:bg-blue-700",
-    "text-white",
+    "bg-gray-400",
+    "hover:bg-slate-600",
+    "text-black",
     "font-bold",
     "py-2",
     "px-4",
     "rounded"
   );
+
   submitButton.textContent = "Login";
 
   form.appendChild(title);
@@ -120,7 +121,7 @@ export const loginPage = () => {
 
       const data = await response.json();
       console.log(data);
-      window.location.pathname = "/home";
+      window.location.pathname = "/todos";
     } catch (error) {}
   });
 

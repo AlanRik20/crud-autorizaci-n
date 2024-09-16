@@ -7,38 +7,12 @@ export const todosPage = () => {
     "items-center",
     "justify-center",
     "h-screen",
-    "bg-gray-200"
+    "bg-gray-600"
   );
-
-  const btnHome = document.createElement("button");
-
-  btnHome.classList.add(
-    "bg-blue-500",
-    "text-white",
-    "p-2",
-    "rounded",
-    "hover:bg-blue-600",
-    "mb-4"
-  );
-
-  btnHome.textContent = "Home";
-
-  btnHome.addEventListener("click", () => {
-    window.location.pathname = "/home";
-  });
-
-  const btnAaddTask = document.createElement("button");
-  btnAaddTask.classList.add("bg-blue-500",
-    "text-white",
-    "p-2",
-    "rounded",
-    "hover:bg-red-600",
-    "mb-4")
-  btnAaddTask.textContent="añadir"
   
   const title = document.createElement("h1");
 
-  title.classList.add("text-3xl", "font-bold", "mb-4");
+  title.classList.add("text-3xl", "font-bold", "mb-4", "text-white");
   title.textContent = "List of Todos";
 
   const table = document.createElement("table");
@@ -46,15 +20,15 @@ export const todosPage = () => {
   table.classList.add(
     "w-1/2",
     "bg-white",
-    "shadow-md",
     "h-[700px]",
-    "overflow-y-scroll"
+    "overflow-y-auto", // Cambia a auto para mostrar el scroll solo si es necesario
+    "rounded-lg"       // Puedes reducir o ajustar el redondeado si es necesario
   );
 
   const thead = document.createElement("thead");
   const tr = document.createElement("tr");
   const th1 = document.createElement("th");
-  th1.classList.add("border", "px-4", "py-2");
+  th1.classList.add("px-4", "py-2");
   th1.textContent = "ID";
 
   const th2 = document.createElement("th");
@@ -82,8 +56,6 @@ export const todosPage = () => {
   table.appendChild(thead);
   table.appendChild(tbody);
 
-  container.appendChild(btnHome);
-  container.appendChild(btnAaddTask);
   
   fetch("http://localhost:4000/todos", {
     credentials: 'include'
@@ -144,6 +116,7 @@ export const todosPage = () => {
             method: 'DELETE',
             credentials: 'include'
           }).then(() => {
+            window.alert(`La tarea ${todo.id} se a eliminado correctamente`)
             tr.remove();
           });
         });
@@ -167,14 +140,12 @@ export const todosPage = () => {
               .then(updatedTodo => {
                 td2.textContent = updatedTodo.todo.title;
                 td3.textContent = updatedTodo.todo.completed ? "Sí" : "No";
+                window.alert(`La tarea ${todo.id} se modificó correcamente`)
               });
           }
         });
 
-        btnAaddTask.addEventListener("click", () => {
-          window.location.pathname = "/agregar";
-        });
-        
+      
         
 
         td5.appendChild(btnDelete);
